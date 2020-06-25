@@ -6,7 +6,6 @@ const cookieParser = require("cookie-parser");
 const User = require("./model/user");
 const app = express();
 const config = require("./config/key");
-require("dotenv").config();
 const auth = require("./middleWare/auth");
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
