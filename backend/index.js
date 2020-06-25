@@ -16,13 +16,10 @@ app.use(cors());
 
 //mongo DB connection
 mongoose
-  .connect(
-    "mongodb+srv://varun:Hello123$@cluster0-ng3en.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(config.mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log(`DB connected successfully...`))
   .catch((err) => console.log(`Error --> ${err}`));
 
