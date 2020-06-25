@@ -1,10 +1,10 @@
 const express = require("express");
+const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const User = require("./model/user");
-const app = express();
 const config = require("./config/key");
 const auth = require("./middleWare/auth");
 // Middlewares
@@ -16,10 +16,13 @@ app.use(cors());
 
 //mongo DB connection
 mongoose
-  .connect(config.mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://varun:Hello123$@cluster0-ng3en.mongodb.net/<dbname>?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => console.log(`DB connected successfully...`))
   .catch((err) => console.log(`Error --> ${err}`));
 
