@@ -3,11 +3,11 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const Sample = require("./model/user");
+const User = require("./model/user");
 const app = express();
 const config = require("./config/key");
 require("dotenv").config();
-
+const auth = require("./middleWare/auth");
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -29,18 +29,58 @@ app.get("/", (req, res) => {
   res.json("Hello World!!");
 });
 
-app.post("/api/sample1/register", (req, res) => {
-  const user = new Sample(req.body);
+app.get("/api/users/auth", auth, (req, res) => {
+  res.status(200).json({
+    _id: req._id,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+  });
+});
+
+app.post("/api/users/register", (req, res) => {
+  const user = new User(req.body);
   user
     .save()
     .then(() => res.json("User added"))
     .catch((err) => res.status(400).json(`Error ${err}`));
-  //   user.save((err, userdata) => {
-  //     if (err) return res.status(400).json({ Success: false, err });
-  //   });
-  //   return res.status(200).json("Success");
 });
 
-app.listen(5000, () => {
-  console.log("Listening on port 5000");
+app.post("/api/users/login", (req, res) => {
+  //find email in the DB
+
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user)
+      return res.json({
+        loginSuccess: false,
+        message: "Auth failed, email not found.",
+      });
+    //compare the password
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (!isMatch) {
+        return res.json({ loginSuccess: false, message: "Wrong password." });
+      }
+    });
+    //generateToken
+    user.generateToken((err, user) => {
+      if (err) return res.status(400).send(err);
+      res.cookie("x_auth", user.token).status(200).json({ loginSuccess: true });
+    });
+  });
+});
+
+app.get("/api/users/logout", auth, (req, res) => {
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, doc) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({
+      success: true,
+    });
+  });
+});
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
