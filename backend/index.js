@@ -21,7 +21,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log(`DB connected successfully...`))
-  .catch((err) => console.log(`Error --> ${err}`));
+  .catch((err) => console.log(`Error ---> ${err}`));
 
 // Routers
 app.get("/", (req, res) => {
