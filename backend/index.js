@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
-console.log("----------->>>>>> index.js", pordKey);
+console.log("----------->>>>>> index.js", pordKey.key);
 //mongo DB connection
 mongoose
   .connect(config.mongoUri, {
