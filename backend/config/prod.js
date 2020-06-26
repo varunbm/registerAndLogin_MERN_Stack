@@ -1,5 +1,5 @@
-const ex = {
+const db = {
   mongoUri: process.env.MONGO_URI,
 };
 
-module.exports = ex.mongoUri;
+module.exports = db.mongoUri;

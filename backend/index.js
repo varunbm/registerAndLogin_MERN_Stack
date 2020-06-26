@@ -18,7 +18,7 @@ app.use(cors());
 console.log("----------->>>>>> index.js", config);
 //mongo DB connection
 mongoose
-  .connect(config.mongoUri, {
+  .connect(config, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
