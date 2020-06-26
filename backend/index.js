@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const User = require("./model/user");
 const config = require("./config/key");
 const auth = require("./middleWare/auth");
+const pordKey = require("./config/prod");
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,7 +16,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
-console.log("----------->>>>>> index.js", config.mongoUri);
+console.log("----------->>>>>> index.js", pordKey);
 //mongo DB connection
 mongoose
   .connect(config.mongoUri, {
