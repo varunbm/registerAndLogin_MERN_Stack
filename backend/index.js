@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
-console.log("----------->>>>>>", config.mongoUri);
+console.log("----------->>>>>> index.js", config.mongoUri);
 //mongo DB connection
 mongoose
   .connect(config.mongoUri, {
