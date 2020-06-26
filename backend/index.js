@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const User = require("./model/user");
 const config = require("./config/key");
 const auth = require("./middleWare/auth");
+
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
