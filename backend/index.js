@@ -15,7 +15,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
-console.log("----------->>>>>> index.js", config);
 //mongo DB connection
 mongoose
   .connect(config, {
@@ -45,7 +44,7 @@ app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
   user
     .save()
-    .then(() => res.json("User added"))
+    .then(() => res.json({ success: true }))
     .catch((err) => res.status(400).json(`Error ${err}`));
 });
 
