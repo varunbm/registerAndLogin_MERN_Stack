@@ -1,1 +1,3 @@
 # eCart
+
+MERN stack appliation.
